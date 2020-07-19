@@ -30,11 +30,11 @@ namespace Receive
                 }
             };
 
-            try
-            {
-                ConnectionFactory factory = RabbitMQPersistentConnection.CreateConnectionFactory(connectionSettings);
-                RabbitMQPersistentConnection rabbitMQPersistentConnection = new RabbitMQPersistentConnection(factory, rabbitMQEventBusSettings);
+            ConnectionFactory factory = RabbitMQPersistentConnection.CreateConnectionFactory(connectionSettings);
+            RabbitMQPersistentConnection rabbitMQPersistentConnection = new RabbitMQPersistentConnection(factory, rabbitMQEventBusSettings);
 
+            try
+            {                
                 if (rabbitMQPersistentConnection.TryConnect())
                 {
 
@@ -71,6 +71,7 @@ namespace Receive
 
                         Console.WriteLine(" Press [enter] to exit.");
                         Console.ReadLine();
+                        
                     }
                 }                
             }
@@ -78,7 +79,8 @@ namespace Receive
             {
                 Console.WriteLine(e.Message);
             }
-            
+
+            rabbitMQPersistentConnection.Dispose();
         }
     }
 }
